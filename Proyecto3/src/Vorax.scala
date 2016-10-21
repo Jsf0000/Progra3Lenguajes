@@ -5,9 +5,15 @@ class Vorax {
   
  var raiz = new Nodo
  
- var matrixM = Array(Array(1,2,3),Array(4,5,6),Array(7,8,0))
- raiz.matrix = Array(Array(0,0,0),Array(0,0,0),Array(0,0,0))
  
+ 
+ var matrixM = Array(Array(1,2,3),Array(4,5,6),Array(7,8,0))
+ var  minA = Array(0,0)
+ 
+  def printMatrix(matrix: Array[Array[Int]]) = {
+    println("")
+		println(matrix.map(_.mkString("|")).mkString("\n"))
+	}
  
    def addListNodos( l1:List[Nodo],l2:List[Nodo]) : List[Nodo] ={
     var list =  l1 ++ l2
@@ -17,53 +23,54 @@ class Vorax {
  
  def caso1(m : Array[Array[Int]]) = {
    var m1 = Array.ofDim[Int](3,3)
+   var m2 = Array.ofDim[Int](3,3)
    var list : List[Nodo] = List(new Nodo)
-   m1 = m
+   m1 = m.map(_.clone())
    if (m(0)(0) == 0){
      m1(0)(0) = m1(0)(1)
      m1(0)(1) = 0
      //raiz.hijos(0) = new Nodo
-     raiz.hijos1 = addListNodos(raiz.hijos1,list)
-     raiz.hijos1(0).matrix = m1
-     m1 = m
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
+     raiz.hijos(0).matrix = m1
+     m1 = m.map(_.clone())
      m1(0)(0) = m1(1)(0)
      m1(1)(0) = 0
-     raiz.hijos1 = addListNodos(raiz.hijos1,list)
-     raiz.hijos1(1).matrix = m1
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
+     raiz.hijos(1).matrix = m1
      //raiz.hijos(1) = new Nodo
      //raiz.hijos(1).matrix = m1
    }else if(m(0)(2) == 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(0)(2) = m1(0)(1)
      m1(0)(1) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(0)(2) = m1(1)(2)
      m1(1)(2) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
    }else if(m(2)(0)== 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(0) = m1(1)(0)
      m1(1)(0) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(0) = m1(2)(1)
      m1(2)(1) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
    } else if(m(2)(2) == 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(2) = m1(2)(1)
      m1(2)(1) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(2) = m1(1)(2)
      m1(1)(2) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
    }
  }
@@ -71,70 +78,70 @@ class Vorax {
    def caso2(m : Array[Array[Int]]){
     var m1 = Array.ofDim[Int](3,3)
     if(m(1)(0)== 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(0) = m1(0)(0)
      m1(0)(0) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(0) = m1(2)(0)
      m1(2)(0) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(0) = m1(1)(1)
      m1(1)(1) = 0
-     raiz.hijos(2) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(2).matrix = m1
    } else if(m(0)(1) == 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(0)(1) = m1(0)(0)
      m1(0)(0) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(0)(1) = m1(1)(1)
      m1(1)(1) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(0)(1) = m1(0)(2)
      m1(0)(2) = 0
-     raiz.hijos(2) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(2).matrix = m1
    }
      else if(m(1)(2) == 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(2) = m1(0)(2)
      m1(0)(2) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(2) = m1(1)(1)
      m1(1)(1) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(2) = m1(2)(2)
      m1(2)(2) = 0
-     raiz.hijos(2) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(2).matrix = m1
    }
      else if(m(2)(1) == 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(1) = m1(2)(0)
      m1(2)(0) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(1) = m1(1)(1)
      m1(1)(1) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(2)(1) = m1(2)(2)
      m1(2)(2) = 0
-     raiz.hijos(2) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(2).matrix = m1
    } 
    }
@@ -142,25 +149,25 @@ class Vorax {
    def caso3(m : Array[Array[Int]]){
      var m1 = Array.ofDim[Int](3,3)
      if(m(1)(1)== 0){
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(1) = m1(1)(0)
      m1(1)(0) = 0
-     raiz.hijos(0) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(1) = m1(0)(1)
      m1(0)(1) = 0
-     raiz.hijos(1) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(1) = m1(1)(2)
      m1(1)(2) = 0
-     raiz.hijos(2) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(2).matrix = m1
-     m1 = m
+     m1 = m.map(_.clone())
      m1(1)(1) = m1(2)(1)
      m1(2)(1) = 0
-     raiz.hijos(3) = new Nodo
+     raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(3).matrix = m1
    }
    
@@ -227,7 +234,20 @@ class Vorax {
 
 	};
    
-   
+     def min (l1: List[Nodo]): Nodo ={
+       var minN: Int = 0
+       for(i <- 0 to (l1.size -1)){
+         minN = tilesOutRowColHeuristic(l1(i).matrix,matrixM)
+         if (minN == 0 || minN < minA(0)){
+           minA(0) = minN
+           minA(1) = i
+         }
+       }
+       return l1(minA(1))
+     }
+     
+     
+     
  
  
  

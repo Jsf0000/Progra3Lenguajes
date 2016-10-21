@@ -24,11 +24,11 @@ object Demo {
    val str = a.raiz.matrix
    
    a.caso1(matrix1)
-  //printMatrix(a.raiz.hijos1(1).matrix)
+  printMatrix(a.raiz.hijos(1).matrix)
   // print(a.raiz.hijos1.size)
    
    
-   print(a.tilesOutRowColHeuristic(matrix1,matrixM))
+   //print(a.tilesOutRowColHeuristic(matrix1,matrixM))
      
     
     
