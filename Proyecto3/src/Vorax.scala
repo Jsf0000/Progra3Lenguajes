@@ -4,11 +4,11 @@ class Vorax {
   
   
  var raiz = new Nodo
- 
- 
+  
+ var hijosV : List[Array[Array[Int]]] = List()
  
  var matrixM = Array(Array(1,2,3),Array(4,5,6),Array(7,8,0))
- var  minA = Array(0,0)
+ 
  
   def printMatrix(matrix: Array[Array[Int]]) = {
     println("")
@@ -20,6 +20,11 @@ class Vorax {
     return list
   }
  
+  def addListMatrix(l1:List[Array[Array[Int]]],l2:List[Array[Array[Int]]] ): List[Array[Array[Int]]]={
+    var list =  l1 ++ l2
+    return list 
+  }
+   
  
  def caso1(m : Array[Array[Int]]) = {
    var m1 = Array.ofDim[Int](3,3)
@@ -236,9 +241,15 @@ class Vorax {
    
      def min (l1: List[Nodo]): Nodo ={
        var minN: Int = 0
-       for(i <- 0 to (l1.size -1)){
+       var  minA = Array(0,0)
+       minA(0) = tilesOutRowColHeuristic(l1(0).matrix,matrixM)
+         //printMatrix(l1(0).matrix)
+         //println(minA(0))
+       for(i <- 1 to (l1.size -1)){
          minN = tilesOutRowColHeuristic(l1(i).matrix,matrixM)
-         if (minN == 0 || minN < minA(0)){
+         //printMatrix(l1(i).matrix)
+         //println(minN)
+         if (minN < minA(0)){
            minA(0) = minN
            minA(1) = i
          }
@@ -246,7 +257,49 @@ class Vorax {
        return l1(minA(1))
      }
      
+    def bucle(){
+      var meta: Boolean = false
+      hijosV = addListMatrix(hijosV, List(raiz.matrix))
+      var cont = 0
+      while (meta == false){
+        cont = cont +1
+        if (raiz.matrix.deep == matrixM.deep){
+          printMatrix(raiz.matrix)
+          meta = true
+        }
+        else{
+          caso1(raiz.matrix)
+          caso2(raiz.matrix)
+          caso3(raiz.matrix)
+          printMatrix(raiz.matrix)
+          println("Paso: " +cont)
+          buscarHijos()
+          raiz = min(raiz.hijos)
+          hijosV = addListMatrix(hijosV, List(raiz.matrix))
+        }
+      }     
+    }
      
+    def existe(m : Array[Array[Int]]): Boolean = {
+      for(i <- 0 to (hijosV.size - 1)){
+         if (m.deep == hijosV(i).deep ){
+           return true
+         }
+      }
+      return false
+    }
+
+     def buscarHijos(){
+       var cont = 0
+       while(cont < raiz.hijos.size)
+       {
+         if (existe(raiz.hijos(cont).matrix)){
+             raiz.hijos = raiz.hijos.patch(cont,Nil,1)
+             cont = 0
+       }
+       cont = cont + 1
+      } 
+     }
      
  
  
