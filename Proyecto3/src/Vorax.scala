@@ -1,4 +1,6 @@
 
+import Math.abs
+
 
 class Vorax {
   
@@ -239,14 +241,14 @@ class Vorax {
 
 	};
    
-     def min (l1: List[Nodo]): Nodo ={
+     def min (l1: List[Nodo],callback:(Array[Array[Int]],Array[Array[Int]])  => Int): Nodo ={
        var minN: Int = 0
        var  minA = Array(0,0)
-       minA(0) = tilesOutRowColHeuristic(l1(0).matrix,matrixM)
+       minA(0) = callback(l1(0).matrix,matrixM)
          //printMatrix(l1(0).matrix)
          //println(minA(0))
        for(i <- 1 to (l1.size -1)){
-         minN = tilesOutRowColHeuristic(l1(i).matrix,matrixM)
+         minN = callback(l1(i).matrix,matrixM)
          //printMatrix(l1(i).matrix)
          //println(minN)
          if (minN < minA(0)){
@@ -274,10 +276,52 @@ class Vorax {
           printMatrix(raiz.matrix)
           println("Paso: " +cont)
           buscarHijos()
-          raiz = min(raiz.hijos)
+          raiz = min(raiz.hijos,manhattanDistanceHeuristic)
           hijosV = addListMatrix(hijosV, List(raiz.matrix))
         }
       }     
+    }
+    
+    
+    
+   def manhattanDistanceHeuristic(S_state: Array[Array[Int]], Gp_state: Array[Array[Int]]) : Int = {
+
+		var S_tile : Int = 0
+
+		var Hm_Si_result : Int = 0
+
+		for( row <- 0 to 3-1) {
+	  	
+	  		for( col <- 0 to 3-1) {
+
+	  			S_tile = S_state(row)(col)
+
+	  			var ( goalRow, goalCol ) = getCordinates(S_tile, Gp_state)	
+	  		
+	  			Hm_Si_result += abs(row - goalRow) + abs(col - goalCol) 
+
+	  		}
+	  	}
+
+	  	Hm_Si_result += 1
+
+	  	Hm_Si_result
+		
+	}
+    
+    
+    def menorHeuristica(S_state: Array[Array[Int]], Gp_state: Array[Array[Int]]):Int ={
+      var h1 = tilesOutRowColHeuristic(S_state,Gp_state)
+      var h2 = manhattanDistanceHeuristic(S_state, Gp_state)
+      println("Heuristica1: "+ h1)
+      println("Heuristica2: "+ h2)
+      if (h1 < h2){
+        //println("Heuristica1: "+ h1)
+        return h1
+      } else{
+        //println("Heuristica2: "+ h2)
+        return h2
+      }   
     }
      
     def existe(m : Array[Array[Int]]): Boolean = {

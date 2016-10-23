@@ -15,6 +15,7 @@ object Demo {
     var list =  l1 ++ l2
     return list
   }
+
   
   def main(args: Array[String]){
   
@@ -25,7 +26,11 @@ object Demo {
 
    
    
-   var matrix1 = Array(Array(0,2,3),Array(8,1,4),Array(7,6,5))
+   var matrix1 = Array(Array(0,1,8),Array(3,5,6),Array(4,2,7))
+   
+   
+  // oncePerSecond(imprimirHola)
+   
    
   // print(list1.size)
    //list1 = list1.patch(1,Nil,1)
