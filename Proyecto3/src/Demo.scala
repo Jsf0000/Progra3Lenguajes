@@ -10,6 +10,12 @@ object Demo {
   
   def main(args: Array[String]){
   
+    // para llamarlo sin menu 
+   // a.raiz.matrix = Array(Array(7,3,2),Array(1,4,5),Array(6,8,0))
+   
+     //a.raiz.matrix = Array(Array(1,8,2),Array(0,4,3),Array(7,6,5))
+   // i.invCount(Array(Array(7,3,2),Array(1,4,5),Array(6,8,0)))
+    //a.bucle(a.manhattanDistanceHeuristic)
     
    while(salir == false){
    a.raiz.matrix = i.ingresarMatrix()
@@ -30,6 +36,7 @@ object Demo {
       salir = false
     }
    }
- }
+  }
+  
    
 }

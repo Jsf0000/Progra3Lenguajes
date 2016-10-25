@@ -8,6 +8,10 @@ class Vorax {
  var raiz = new Nodo
   
  var hijosV : List[Array[Array[Int]]] = List()
+ var padres : List[Array[Array[Int]]] = List()
+
+ 
+ var hijosVN :  List[Nodo] = List()
  
  var matrixM = Array(Array(1,2,3),Array(4,5,6),Array(7,8,0))
  
@@ -36,7 +40,6 @@ class Vorax {
    if (m(0)(0) == 0){
      m1(0)(0) = m1(0)(1)
      m1(0)(1) = 0
-     //raiz.hijos(0) = new Nodo
      raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(0).matrix = m1
      m1 = m.map(_.clone())
@@ -44,8 +47,6 @@ class Vorax {
      m1(1)(0) = 0
      raiz.hijos = addListNodos(raiz.hijos,List(new Nodo))
      raiz.hijos(1).matrix = m1
-     //raiz.hijos(1) = new Nodo
-     //raiz.hijos(1).matrix = m1
    }else if(m(0)(2) == 0){
      m1 = m.map(_.clone())
      m1(0)(2) = m1(0)(1)
@@ -260,7 +261,7 @@ class Vorax {
       var cont = 0
       while (meta == false){
         cont = cont +1
-        if (raiz.matrix.deep == matrixM.deep){
+        if (raiz.matrix.deep == matrixM.deep || cont == 950){
           printMatrix(raiz.matrix)
           meta = true
         }
@@ -271,8 +272,13 @@ class Vorax {
           printMatrix(raiz.matrix)
           println("Paso: " +cont)
           buscarHijos()
+          hijosVN = addListNodos(hijosVN,List(raiz))
           raiz = min(raiz.hijos,callback)
           hijosV = addListMatrix(hijosV, List(raiz.matrix))
+          if(existe(raiz.matrix,padres) == false){
+            padres = addListMatrix(hijosV, List(raiz.matrix))
+          }
+          
         }
       }     
     }
@@ -303,17 +309,10 @@ class Vorax {
 	  	Hm_Si_result
 		
 	}
-    
-    
-    def sumHeuristica(S_state: Array[Array[Int]], Gp_state: Array[Array[Int]]):Int ={
-      var h1 = manhattanDistanceHeuristic(S_state, Gp_state)
-      var h2 = tilesOutRowColHeuristic(S_state, Gp_state)
-      return (h1+h2)
-    }
-     
-    def existe(m : Array[Array[Int]]): Boolean = {
-      for(i <- 0 to (hijosV.size - 1)){
-         if (m.deep == hijosV(i).deep ){
+         
+    def existe(m : Array[Array[Int]], l: List[Array[Array[Int]]]): Boolean = {
+      for(i <- 0 to (l.size - 1)){
+         if (m.deep == l(i).deep ){
            return true
          }
       }
@@ -323,19 +322,32 @@ class Vorax {
      def buscarHijos(){
        var cont = 0
        while(cont < raiz.hijos.size)
-       {
-         if (existe(raiz.hijos(cont).matrix)){
+       {  
+         if (existe(raiz.hijos(cont).matrix,hijosV)){
+            
              raiz.hijos = raiz.hijos.patch(cont,Nil,1)
              cont = 0
-       }
-       cont = cont + 1
+             
+             if (raiz.hijos.size == 0) {
+               raiz.matrix = padres.last.map(_.clone())
+               padres = padres.patch((padres.size -1),Nil,1)
+               printMatrix(raiz.matrix)
+               caso1(raiz.matrix)
+               caso2(raiz.matrix)
+               caso3(raiz.matrix)
+               buscarHijos()              
+             }
+         }
+         else
+         {
+           cont = cont + 1
+         }
       } 
      }
      
  
  
- 
- 
+
  
  
  
