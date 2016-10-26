@@ -1,26 +1,25 @@
-
 import Math.abs
 
 
 class Vorax {
   
-  
+ // raiz del algoritmo voraz
  var raiz = new Nodo
   
+ // listas que almacenan las matrices correspondientes a visitados, libres y padres
  var hijosV : List[Array[Array[Int]]] = List()
  var padres : List[Array[Array[Int]]] = List()
-
- 
  var hijosVN :  List[Nodo] = List()
  
+ //matriz meta para la solucion
  var matrixM = Array(Array(1,2,3),Array(4,5,6),Array(7,8,0))
  
- 
+ // metodo que imprime una matriz
   def printMatrix(matrix: Array[Array[Int]]) = {
     println("")
 		println(matrix.map(_.mkString("|")).mkString("\n"))
 	}
- 
+ //metodos para concatenar una lista de nodos y lista de matrices
    def addListNodos( l1:List[Nodo],l2:List[Nodo]) : List[Nodo] ={
     var list =  l1 ++ l2
     return list
@@ -31,7 +30,7 @@ class Vorax {
     return list 
   }
    
- 
+ // se presentan 3 casos los cuales corresponden a formar los movimientos posibles segun la ubicacion del cero en la matriz
  def caso1(m : Array[Array[Int]]) = {
    var m1 = Array.ofDim[Int](3,3)
    var m2 = Array.ofDim[Int](3,3)
@@ -182,6 +181,7 @@ class Vorax {
    
  }
    
+   //Metodo utilizado  por la heuristica  Tiles out of row and column
    
    def getCordinates( tile : Int , Gp_state: Array[Array[Int]] ) = {
 
@@ -207,7 +207,7 @@ class Vorax {
 		(rowTile,colTile)
 	}
    
-   
+    // implementacion de la primera heuristica
   	def tilesOutRowColHeuristic(S_state: Array[Array[Int]], Gp_state: Array[Array[Int]]) : Int = {
 		var S_tile : Int = 0
 
@@ -240,7 +240,9 @@ class Vorax {
 	  	sum
 
 	};
-   
+	
+	
+    //funcion que obtiene el minimo valor de la heuristica pasada correspondiente a los hijos   
      def min (l1: List[Nodo],callback:(Array[Array[Int]],Array[Array[Int]])  => Int): Nodo ={
        var minN: Int = 0
        var  minA = Array(0,0)
@@ -255,13 +257,18 @@ class Vorax {
        return l1(minA(1))
      }
      
+     
+     //funcion que realiza el algoritmo voraz
     def bucle(callback:(Array[Array[Int]],Array[Array[Int]])  => Int){
       var meta: Boolean = false
       hijosV = addListMatrix(hijosV, List(raiz.matrix))
       var cont = 0
       while (meta == false){
         cont = cont +1
-        if (raiz.matrix.deep == matrixM.deep || cont == 950){
+        if (raiz.matrix.deep == matrixM.deep || cont == 2000){
+          if(cont == 2000){
+            println("Existe desbordamiento")
+          }
           printMatrix(raiz.matrix)
           meta = true
         }
@@ -284,7 +291,7 @@ class Vorax {
     }
     
     
-    
+    //segunda heuristica implementada
    def manhattanDistanceHeuristic(S_state: Array[Array[Int]], Gp_state: Array[Array[Int]]) : Int = {
 
 		var S_tile : Int = 0
@@ -310,6 +317,7 @@ class Vorax {
 		
 	}
          
+   //funcion para verificar si una matriz existe en una determinada lista de matrices
     def existe(m : Array[Array[Int]], l: List[Array[Array[Int]]]): Boolean = {
       for(i <- 0 to (l.size - 1)){
          if (m.deep == l(i).deep ){
@@ -319,6 +327,7 @@ class Vorax {
       return false
     }
 
+    // funcion que elimina hijos que se encuentren en la lista de hijosV
      def buscarHijos(){
        var cont = 0
        while(cont < raiz.hijos.size)

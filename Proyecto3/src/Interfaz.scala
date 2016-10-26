@@ -1,8 +1,11 @@
 
 
 class Interfaz {
+  
+     // arreglo utilizado para ver si una matriz tiene solucion
      var solve:Array[Int] =  new Array[Int](9)
   
+     // Metodo  que permite ingresar la matriz desde consola
     def ingresarMatrix(): Array[Array[Int]] = {
     var insertar = false
     var m = Array.ofDim[Int](3,3)
@@ -39,6 +42,7 @@ class Interfaz {
   }
   
     
+// Metodo que permite escoger la heutistica desde consola 
  def escogerHeuristica(): Int ={
    var insertar = false
    var r = 0
@@ -57,11 +61,9 @@ class Interfaz {
     return r
    }
    
- def h(){
-   println("Hola")
- }
 
-   
+
+   // Metodo que devuelve el contador invertido para saber si una matriz tiene solucion
    def invCount():Int = {
     var invCount = 0
    
@@ -78,6 +80,7 @@ class Interfaz {
    }
  
    
+   // Metodo que devuelve un true si una tiene solucion
    def isSolvable(): Boolean ={
      var inv = invCount()
      if (inv%2 == 0){
@@ -86,7 +89,7 @@ class Interfaz {
        return false
      }
    }
-
+   // Metodo para imprimir una matriz
    def printMatrix(matrix: Array[Array[Int]]) = {
 		println(matrix.map(_.mkString("|")).mkString("\n"))
    }
